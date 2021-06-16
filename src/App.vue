@@ -4,7 +4,7 @@
     <v-main>
       <router-view />
     </v-main>
-    <notifications />
+    <notifications position="top right" class="mt-5" :closeOnClick="true" />
     <TheFooter/>
   </v-app>
 </template>
