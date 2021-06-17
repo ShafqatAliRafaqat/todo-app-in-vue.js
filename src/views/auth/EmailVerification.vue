@@ -13,6 +13,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
+              <v-btn align="right" color="primary" @click="resend">ReSend Code</v-btn>
               <v-btn type="submit" align="right" color="primary" :disabled="invalid">Verify</v-btn>
             </v-card-actions>
           </v-form>
@@ -27,12 +28,15 @@ import { mapMutations } from "vuex";
 
 export default {
   components: { ValidationObserver },
-
+  props:{
+    user_id:Number,
+  },
   methods: {
     ...mapMutations("auth", ["login"]),
+    
     onSubmit() {
       this.$api
-        .post("/login", this.user)
+        .post("/verification", this.user)
         .then((response) => {
           this.handleAuth(response.data.data);
           this.$router.push({ name: "dashboard" });
@@ -48,13 +52,27 @@ export default {
     validationErrors(errors) {
       this.$refs.form.setErrors(errors);
     },
-  },
-  data: () => ({
-    user: {
-      code: "",
-      user_id: "",
+
+    resend() {
+      this.$api
+        .post("/re-send", this.user_id)
+        .then((response) => {
+          console.log(response.data.data);
+        })
+        .catch((error) => {
+          this.validationErrors(error.response.data.errors);
+        });
     },
-  }),
+
+  },
+  data(){ 
+    return{
+      user: {
+        code: "",
+        user_id: this.user_id,
+      },
+    }
+  }
 };
 </script>
 <style>

@@ -8,13 +8,35 @@
         <validation-observer ref="form" v-slot="{ invalid }">
           <v-form @submit.prevent="onSubmit">
             <v-card-text>
-              <vee-input v-model="user.name" name="name" rules="required" label="Name" />
-              <vee-input v-model="user.email" name="email" rules="required|email" label="Email" />
-              <vee-input v-model="user.password" name="password" rules="required|min:8" label="Password" type="password" />
+              <vee-input
+                v-model="user.name"
+                name="name"
+                rules="required|min:3|max:255"
+                label="Name"
+              />
+              <vee-input
+                v-model="user.email"
+                name="email"
+                rules="required|email"
+                label="Email"
+              />
+              <vee-input
+                v-model="user.password"
+                name="password"
+                rules="required|min:8"
+                label="Password"
+                type="password"
+              />
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn type="submit" align="right" color="primary" :disabled="invalid">Register</v-btn>
+              <v-btn
+                type="submit"
+                align="right"
+                color="primary"
+                :disabled="invalid"
+                >Register</v-btn
+              >
             </v-card-actions>
           </v-form>
         </validation-observer>
@@ -33,14 +55,21 @@ export default {
     ...mapMutations("auth", ["login"]),
     onSubmit() {
       this.$api
-        .post("/login", this.user)
+        .post("/register", this.user)
         .then((response) => {
-          this.handleAuth(response.data.data);
-          this.$router.push({ name: "home" });
+          console.log(response.data.data);
+          this.goToVerification(response.data.data);
+          // this.$router.push({ name: "verification" });
         })
         .catch((error) => {
           this.validationErrors(error.response.data.errors);
         });
+    },
+    goToVerification(user) {
+      this.$router.push({
+        path: "/verification",
+        params: { user_id: user.id },
+      });
     },
     handleAuth(user) {
       this.login(user);
