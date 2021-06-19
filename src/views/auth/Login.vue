@@ -34,7 +34,7 @@ export default {
       this.$api
         .post("/login", this.user)
         .then( response =>  {
-          this.handleAuth(response.data.data.user);
+          this.handleAuth(response.data.data);
           this.$router.push({ name: "dashboard" });
         }).catch (err =>   {
             if (err.response) {

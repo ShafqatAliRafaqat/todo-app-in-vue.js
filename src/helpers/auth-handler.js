@@ -16,11 +16,9 @@ export function getUser() {
   const email = localStorage.getItem("email") || "";
   const accessToken = localStorage.getItem("access_token") || "";
   const email_verified = localStorage.getItem("email_verified") || "";
-  let meta = localStorage.getItem("meta");
 
   // @ts-ignore
 
-  meta = meta ? JSON.parse(meta) : {};
   if (accessToken) {
     return {
       id,
@@ -28,7 +26,6 @@ export function getUser() {
       email,
       email_verified: email_verified,
       access_token: accessToken,
-      meta,
     };
   }
   return undefined;

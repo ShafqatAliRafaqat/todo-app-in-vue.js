@@ -113,9 +113,8 @@
 </template>
 <script>
 import { ValidationObserver } from "vee-validate";
-import VeeTextarea from '../../components/shared/inputs/VeeTextarea.vue'
   export default {
-  components: { VeeTextarea, ValidationObserver },
+  components: { ValidationObserver },
     data: () => ({
       dialog: false,
       dialogDelete: false,

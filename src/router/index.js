@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 
 const authCheck = (to, from, next) => {
   if (store.state.auth.isLoggedIn) {
-    if (["/login", "/register", "/forgot-password"].includes(to.path)) {
+    if (["/login", "/register"].includes(to.path)) {
       next(from.path);
       return;
     }
